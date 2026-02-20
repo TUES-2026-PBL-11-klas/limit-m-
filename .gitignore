@@ -75,4 +75,6 @@ build/
 ### VS Code ###
 .vscode/
 
+*.exe
+
 
