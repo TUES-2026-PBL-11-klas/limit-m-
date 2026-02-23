@@ -17,7 +17,7 @@ const LandingScreen = ({ navigation }) => {
         <View style={styles.titleSection}>
           <Text style={styles.title}>Screen Time</Text>
           <Text style={styles.tagline}>Track.Improve.</Text>
-        </View>
+        </View> 
 
         <View style={styles.buttonsSection}>
           <TouchableOpacity

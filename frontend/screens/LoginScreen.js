@@ -1,4 +1,4 @@
-    import React, { useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     console.log('Login:', { email, password });//connect backend api 
+    navigation.navigate('Dashboard');
   };
 
   return (
@@ -162,11 +163,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
   },
-  registerPromptText: {//tuk ne iskam da e na nov red, fixx
+
+  registerPrompt: {
+    width: '100%',          
+    alignItems: 'center',  
+    marginTop: 20,
+  },
+  registerPromptText: {
     color: '#8d8d8d',
     fontSize: 14,
-    marginBottom: 12,
+    marginBottom: 12,     
     textAlign: 'center',
+  },
+  registerButton: {
+    width: '100%',         
+    backgroundColor: '#000000',
+    paddingVertical: 16,
+    borderRadius: 20,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ffffff',
+  },
+  registerButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
   registerButton: {
     width: '100%',
