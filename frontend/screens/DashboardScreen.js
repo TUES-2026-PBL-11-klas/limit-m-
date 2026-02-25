@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   },
   shape1: {
     position: 'absolute',
-    bottom: -150,
-    left: -80,
+    bottom: -270,
+    left: -75,
     width: 500,
     height: 500,
     borderRadius: 250,
