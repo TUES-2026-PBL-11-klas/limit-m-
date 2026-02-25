@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -26,8 +26,13 @@ const DailyDetailsScreen = ({ navigation }) => {
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Today</Text>
             <View style={styles.divider} />
-            <Text style={styles.statText}>Total Time: 90 mins</Text>
-            <Text style={styles.statText}>Pickups: 14</Text>
+            <Text style={styles.statLabel}>Total screen time</Text>
+            <Text style={styles.statValue}>90 minutes</Text>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Goal Progress</Text>
+            <Text style={styles.statLabel}>You have 30 mins remaining</Text>
           </View>
 
           <View style={styles.backbuttonContainer}>
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 250,
     backgroundColor: '#143f14',
     opacity: 0.4,
+    zIndex: -1,
   },
   headerSection: {
     alignItems: 'center',
@@ -97,10 +103,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     marginBottom: 15,
   },
-  statText: {
-    color: '#AAAAAA',
+  statLabel: {
+    color: '#888',
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: 5,
+  },
+  statValue: {
+    color: '#5ABE26',
+    fontSize: 28,
+    fontWeight: '900',
   },
   backbuttonContainer: {
     marginTop: 'auto',
@@ -114,6 +125,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#5ABE26',
+    width: '80%',
+    alignItems: 'center',
   },
   backbuttonText: {
     color: '#5ABE26',

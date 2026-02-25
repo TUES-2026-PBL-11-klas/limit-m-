@@ -12,6 +12,9 @@ import {
 import { useScreenTime } from '../hooks/useUsageStats';
 
 const { UsageStatsModule } = NativeModules;
+if (!UsageStatsModule) {
+  console.warn("UsageStatsModule not found! Are you in a Development Build?");
+}
 
 const DashboardScreen = ({ navigation }) => {
   const { totalMinutes, loading } = useScreenTime();
@@ -36,7 +39,8 @@ const DashboardScreen = ({ navigation }) => {
     // Run on every focus (handles coming back from Permission without granting)
     const unsubscribe = navigation.addListener('focus', checkPermission);
     return unsubscribe;
-  }, [navigation]);a
+  }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
