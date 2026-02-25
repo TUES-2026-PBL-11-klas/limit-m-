@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,21 +7,36 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
+  NativeModules,
 } from 'react-native';
+import { useScreenTime } from '../hooks/useUsageStats';
+
+const { UsageStatsModule } = NativeModules;
 
 const DashboardScreen = ({ navigation }) => {
-  const [dailyUsage, setDailyUsage] = useState(90);
+  const { totalMinutes, loading } = useScreenTime();
   const [dailyLimit, setDailyLimit] = useState(120);
   const [currentStreak, setCurrentStreak] = useState(5);
-  const [profileButton, setProfileButton] = useState(false);//profile button
+  const hasCheckedPermission = useRef(false);
 
+  const dailyUsage = totalMinutes ?? 0;
   const progress = Math.min((dailyUsage / dailyLimit) * 100, 100);
 
-  const handleProfileButton = () => {
-    console.log('Profile button pressed:', profileButton);//backend api
-    setProfileButton(!profileButton);
-  };
+  useEffect(() => {
+    const checkPermission = async () => {
+      if (hasCheckedPermission.current) return;
+      hasCheckedPermission.current = true;
 
+      const granted = await UsageStatsModule.hasUsagePermission();
+      if (!granted) {
+        navigation.navigate('Permission');
+      }
+    };
+
+    // Run on every focus (handles coming back from Permission without granting)
+    const unsubscribe = navigation.addListener('focus', checkPermission);
+    return unsubscribe;
+  }, [navigation]);a
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -36,7 +51,9 @@ const DashboardScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Today's screen time: {dailyUsage} minutes</Text>
+            <Text style={styles.cardTitle}>
+              {loading ? 'Loading...' : `Today's screen time: ${dailyUsage} minutes`}
+            </Text>
             <TouchableOpacity
               style={styles.detailsButton}
               onPress={() => navigation.navigate('DailyDetails')}
@@ -47,7 +64,7 @@ const DashboardScreen = ({ navigation }) => {
 
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Daily limit</Text>
-            
+
             <View style={styles.progressBarBackground}>
               <View style={[styles.progressBarFill, { width: `${progress}%` }]} />
             </View>
@@ -163,8 +180,8 @@ const styles = StyleSheet.create({
   },
 
   profileButtonContainer: {
-    marginTop: 'auto', 
-    marginBottom: 100, 
+    marginTop: 'auto',
+    marginBottom: 100,
     width: '80%',
     right: -25,
     top: -20,
