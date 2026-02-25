@@ -25,7 +25,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Session> sessions = new ArrayList<>();
 
-    //Constructor
+    //Constructors
+    public User() {}
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
