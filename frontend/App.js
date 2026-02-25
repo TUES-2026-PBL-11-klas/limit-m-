@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import DailyDetailsScreen from './screens/DailyDetailsScreen';
+import PermissionScreen from './screens/PermissionScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen name="DailyDetails" component={DailyDetailsScreen} />
+        <Stack.Screen name="Permission" component={PermissionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
