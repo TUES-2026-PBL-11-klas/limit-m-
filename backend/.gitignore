@@ -1,0 +1,21 @@
+target/
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+/logs/
+/out/
+
+# Maven
+/dependency-reduced-pom.xml
+/.mvn/wrapper/maven-wrapper.jar
+
+# Env
+.env
+.env.*
+
+# OS
+*.log
+*.tmp
+
