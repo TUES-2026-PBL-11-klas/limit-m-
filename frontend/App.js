@@ -8,6 +8,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import DailyDetailsScreen from './screens/DailyDetailsScreen';
 import PermissionScreen from './screens/PermissionScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen name="DailyDetails" component={DailyDetailsScreen} />
         <Stack.Screen name="Permission" component={PermissionScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
