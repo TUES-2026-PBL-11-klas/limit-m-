@@ -18,9 +18,9 @@ public class LoginRequest {
     LoginRequest() {}
 
     //Getters & Setters
-    private String getEmail() { return email; }
-    private String getPassword() { return password; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
 
-    private void setEmail(String email) { this.email = email; }
-    private void setPassword(String password) { this.password = password; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
 }
