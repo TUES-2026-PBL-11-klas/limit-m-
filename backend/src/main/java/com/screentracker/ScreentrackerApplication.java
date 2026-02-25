@@ -1,4 +1,4 @@
-package com.Keks4eta.Screentracker;
+package com.screentracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
