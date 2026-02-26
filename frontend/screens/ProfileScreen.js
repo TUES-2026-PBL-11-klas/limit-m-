@@ -9,20 +9,24 @@ import {
   ScrollView,
 } from 'react-native';
 
+//има някакъв сложен опасити ефект върху логаут бутона и върху статистики с=карда вероятно заради шейпа, затова за момента го махнах
+
 const ProfileScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('gosho.petrov2gmail.com');
+  const [email, setEmail] = useState('gosho.petrov@gmail.com');
   const [password, setPassword] = useState('password123');
   const [limit, setLimit] = useState('300min');
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
-        
+
+      
         <View style={styles.headerContainer}>
           <View style={styles.headerCapsule}>
             <Text style={styles.headerText}>Profile</Text>
           </View>
         </View>
+
+      <ScrollView contentContainerStyle={styles.content}>
 
         <TouchableOpacity 
           style={styles.backButton} 
@@ -61,7 +65,7 @@ const ProfileScreen = ({ navigation }) => {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.logoutButton}>
+        <TouchableOpacity style={styles.logoutButton} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
 
@@ -77,6 +81,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
+
+  /*
+  shape1: {
+    position: 'absolute',
+    bottom: -270,
+    left: -75,
+    width: 500,
+    height: 500,
+    borderRadius: 250,
+    backgroundColor: '#143f14',
+    opacity: 0.4,
+  }, */
+  
   content: {
     paddingHorizontal: 30,
     paddingTop: 20,
@@ -86,17 +103,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
+
   headerCapsule: {
-    borderWidth: 2,
-    borderColor: '#5ABE26',
-    borderRadius: 50,
-    paddingVertical: 15,
-    width: '100%',
-    alignItems: 'center',
+
   },
   headerText: {
     color: '#5ABE26',
     fontSize: 32,
+    top: 30,
     fontWeight: '900',
   },
   backButton: {
@@ -148,19 +162,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   logoutButtonText: {
-    color: '#000000',
+    color: '#ffffff',
     fontSize: 18,
     fontWeight: '900',
-  },
-  shape1: {
-    position: 'absolute',
-    bottom: -270,
-    left: -75,
-    width: 500,
-    height: 500,
-    borderRadius: 250,
-    backgroundColor: '#143f14',
-    opacity: 0.4,
   },
 });
 

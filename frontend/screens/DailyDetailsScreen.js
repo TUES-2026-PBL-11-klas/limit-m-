@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   shape1: {
     position: 'absolute',
-    bottom: -270,
+    bottom: -300,
     left: -80,
     width: 500,
     height: 500,
