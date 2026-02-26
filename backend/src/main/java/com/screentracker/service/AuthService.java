@@ -4,6 +4,7 @@ import com.screentracker.dto.LoginRequest;
 import com.screentracker.dto.RegisterRequest;
 import com.screentracker.model.User;
 import com.screentracker.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class AuthService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Transactional
     public User register(RegisterRequest request) {
         if(userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already registered");
