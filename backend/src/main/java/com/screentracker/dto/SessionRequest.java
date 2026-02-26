@@ -8,19 +8,18 @@ import com.screentracker.model.User;
 
 public class SessionRequest {
     //Attributes
-
-    @NotBlank
+    @NotBlank(message = "Session must be connected with user")
     private User user;
 
-    @NotBlank
+    @NotBlank(message = "Session must contain an app")
     private String app;
 
-    @NotBlank
-    @Past
+    @NotBlank(message = "Session must contain a start_time")
+    @Past(message = "Session start_time must be in the past")
     private LocalDateTime start_time;
 
-    @NotBlank
-    @PastOrPresent
+    @NotBlank(message = "Session must contain an end_time")
+    @PastOrPresent(message = "Session end_time must be in the present or past")
     private LocalDateTime end_time;
 
     //Constructor
