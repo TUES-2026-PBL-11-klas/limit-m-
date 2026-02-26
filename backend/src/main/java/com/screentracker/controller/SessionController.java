@@ -17,7 +17,7 @@ public class SessionController {
 
     public SessionController(SessionService sessionService) { this.sessionService = sessionService; }
 
-    @PostMapping("/post")
+    @PostMapping("/post-session")
     public HttpStatus postSession(@Valid @RequestBody SessionRequest request) {
         List<Session> sessions = sessionService.postSession(request);
         
