@@ -1,9 +1,11 @@
 package com.screentracker.controller;
 
 import com.screentracker.dto.AuthResponse;
+import com.screentracker.dto.LoginRequest;
 import com.screentracker.dto.RegisterRequest;
 import com.screentracker.model.User;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +33,19 @@ public class AuthController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        User user = authService.login(request);
+
+        AuthResponse response = new AuthResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                "Successfully logged user in"
+        );
+
+        return ResponseEntity.ok(response);
     }
 }
