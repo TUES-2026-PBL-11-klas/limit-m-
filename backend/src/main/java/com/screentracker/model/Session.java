@@ -29,9 +29,10 @@ public class Session {
     //Constructors
     public Session() {}
 
-    public Session(LocalDateTime start_time, LocalDateTime end_time, Long user_id) {
+    public Session(LocalDateTime start_time, LocalDateTime end_time, String app, Long user_id) {
         this.start_time = start_time;
         this.end_time = end_time;
+        this.app = app;
         this.user_id = user_id;
     }
 
