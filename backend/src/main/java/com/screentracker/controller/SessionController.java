@@ -18,8 +18,8 @@ public class SessionController {
 
     @PostMapping("/post")
     public HttpStatus postSession(@Valid @RequestBody SessionRequest request) {
-        Session session sessionService.postSession(request);
-
+        Session session = sessionService.postSession(request);
+        
         return HttpStatus.CREATED;
     }
 }
