@@ -24,15 +24,15 @@ public class Session {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Long user_id;
 
     //Constructors
     public Session() {}
 
-    public Session(LocalDateTime start_time, LocalDateTime end_time, User user) {
+    public Session(LocalDateTime start_time, LocalDateTime end_time, Long user_id) {
         this.start_time = start_time;
         this.end_time = end_time;
-        this.user = user;
+        this.user_id = user_id;
     }
 
     //Getters & Setters
@@ -40,11 +40,11 @@ public class Session {
     public LocalDateTime getStart_time() { return start_time; }
     public LocalDateTime getEnd_time() { return end_time; }
     public String getApp() { return app; }
-    public User getUser() { return user; }
+    public Long getUser_id() { return user_id; }
 
     public void setStart_time(LocalDateTime start_time) { this.start_time = start_time; }
     public void setEnd_time(LocalDateTime end_time) { this.end_time = end_time; }
     public void setApp(String app) { this.app = app; }
-    public void setUser(User user) { this.user = user; }
+    public void setUser_id(Long user_id) { this.user_id = user_id; }
     
 }
