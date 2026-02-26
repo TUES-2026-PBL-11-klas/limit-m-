@@ -42,7 +42,7 @@ public class SessionService {
 
         LocalDate currentDate = startDate;
 
-        while (!currentDate.isAfter(endDate)) {
+        while (!currentDate.isAfter(endDate)) { // mimics currentDate <= endDate
 
             Session part = new Session(request.getStart_time(), request.getEnd_time(), request.getApp(), request.getUser_id());
 
