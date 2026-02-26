@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.screentracker.model.User;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
+
 import java.util.Optional;
 
 @Repository
