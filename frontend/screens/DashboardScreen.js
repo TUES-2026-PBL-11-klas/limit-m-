@@ -12,9 +12,6 @@ import {
 import { useScreenTime } from '../hooks/useUsageStats';
 
 const { UsageStatsModule } = NativeModules;
-if (!UsageStatsModule) {
-  console.warn("UsageStatsModule not found! Are you in a Development Build?");
-}
 
 const DashboardScreen = ({ navigation }) => {
   const { totalMinutes, loading } = useScreenTime();
@@ -36,7 +33,6 @@ const DashboardScreen = ({ navigation }) => {
       }
     };
 
-    // Run on every focus (handles coming back from Permission without granting)
     const unsubscribe = navigation.addListener('focus', checkPermission);
     return unsubscribe;
   }, [navigation]);
@@ -91,10 +87,10 @@ const DashboardScreen = ({ navigation }) => {
           <View style={styles.profileButtonContainer}>
             <TouchableOpacity
               style={styles.profileButton}
-              onPress={() => navigation.navigate('ProfileScreen')}
+              onPress={() => navigation.navigate('Profile')}
               >
                 <Text style={styles.profileButtonText}>Profile</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> 
           </View>
 
         </View>
@@ -188,7 +184,7 @@ const styles = StyleSheet.create({
     marginBottom: 100,
     width: '80%',
     right: -25,
-    top: -20,
+    top: 0,
     alignItems: 'center',
   },
   profileButton: {
