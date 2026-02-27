@@ -35,7 +35,8 @@ const LoginScreen = ({ navigation }) => {
     const data = await response.json();
   }catch (error) {
     console.error('Login error:', error);}
-};
+
+  };
 
   return (
     <SafeAreaView style={styles.container}>
