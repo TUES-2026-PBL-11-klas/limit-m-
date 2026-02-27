@@ -25,6 +25,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Session> sessions = new ArrayList<>();
 
+    //One-to-many relationship with DailyAggregate entity
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DailyAggregate> dailies = new ArrayList<>();
+
     //Constructors
     public User() {}
 
