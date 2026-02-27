@@ -15,7 +15,7 @@ import { API_BASE_URL } from '../config';
 const { UsageStatsModule } = NativeModules;
 
 const DashboardScreen = ({ navigation }) => {
-  const { totalMinutes, loading } = useScreenTime();
+  const { totalMinutes, loading } = useState(140);
   const [dailyLimit, setDailyLimit] = useState(120);
   const [currentStreak, setCurrentStreak] = useState(5);
   const hasCheckedPermission = useRef(false);

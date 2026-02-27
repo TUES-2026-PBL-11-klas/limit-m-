@@ -33,7 +33,11 @@ const LoginScreen = ({ navigation }) => {
     });
 
     const data = await response.json();
-    console.log(data);
+        if (data.message && data.message.toLowerCase().includes('success')) {
+              navigation.navigate('Dashboard');
+            } else {
+              alert(data.message || 'Registration failed');
+            }
   }catch (error) {
     console.error('Login error:', error);}
 
