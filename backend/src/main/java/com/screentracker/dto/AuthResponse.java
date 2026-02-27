@@ -2,7 +2,7 @@ package com.screentracker.dto;
 
 public class AuthResponse {
     //Attributes
-    private Long id;
+    private Long user_id;
     private String name;
     private String email;
     private String message;
@@ -10,15 +10,15 @@ public class AuthResponse {
 
 
     //Constructor
-    public AuthResponse(Long id, String name, String email, String message) {
-        this.id = id;
+    public AuthResponse(Long user_id, String name, String email, String message) {
+        this.user_id = user_id;
         this.name = name;
         this.email = email;
         this.message = message;
     }
 
     //Getters
-    public Long getId() { return id; }
+    public Long getUser_id() { return user_id; }
     public String getEmail() { return email; }
     public String getName() { return name; }
     public String getMessage() { return message; }

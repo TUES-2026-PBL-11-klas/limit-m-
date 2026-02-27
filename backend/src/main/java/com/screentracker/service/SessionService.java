@@ -51,6 +51,7 @@ public class SessionService {
             session.setEnd_time(request.getEnd_time());
             sessionRepository.save(session);
             sessions.add(session);
+            return sessions;
 
         }
 

@@ -23,7 +23,7 @@ public class Session {
     private String app;
 
     @ManyToOne
-    @JoinColumn(name = "user", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 

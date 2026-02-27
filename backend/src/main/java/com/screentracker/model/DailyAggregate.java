@@ -13,7 +13,7 @@ public class DailyAggregate {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
@@ -34,6 +34,11 @@ public class DailyAggregate {
         this.time_spent = time_spent;
     }
 
-    // getters
+    // Getters
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public String getApp() { return app; }
+    public LocalDate getDate() { return date; }
+    public Duration getTime_spent() { return time_spent; }
 }
 
