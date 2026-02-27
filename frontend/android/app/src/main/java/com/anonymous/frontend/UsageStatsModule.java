@@ -1,16 +1,16 @@
 package com.anonymous.frontend;
 
-import android.app.usage.UsageStats;
+import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.provider.Settings;
 
 import com.facebook.react.bridge.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UsageStatsModule extends ReactContextBaseJavaModule {
 
@@ -27,15 +27,16 @@ public class UsageStatsModule extends ReactContextBaseJavaModule {
     public void hasUsagePermission(Promise promise) {
         try {
             Context context = getReactApplicationContext();
-            AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            AppOpsManager appOps =
+                    (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+
             int mode = appOps.noteOpNoThrow(
                     "android:get_usage_stats",
                     android.os.Process.myUid(),
                     context.getPackageName()
             );
 
-            boolean granted = (mode == AppOpsManager.MODE_ALLOWED);
-            promise.resolve(granted);
+            promise.resolve(mode == AppOpsManager.MODE_ALLOWED);
         } catch (Exception e) {
             promise.reject("ERROR", e);
         }
@@ -49,52 +50,68 @@ public class UsageStatsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getUsage(double startMillis, double endMillis, String intervalStr, Promise promise) {
+    public void getUsage(double startMillis, double endMillis, Promise promise) {
         try {
+            Context context = getReactApplicationContext();
+
             UsageStatsManager usm =
-                    (UsageStatsManager) getReactApplicationContext()
-                            .getSystemService(Context.USAGE_STATS_SERVICE);
+                    (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
 
-            int interval = UsageStatsManager.INTERVAL_DAILY;
-            switch (intervalStr.toLowerCase()) {
-                case "daily": interval = UsageStatsManager.INTERVAL_DAILY; break;
-                case "weekly": interval = UsageStatsManager.INTERVAL_WEEKLY; break;
-                case "monthly": interval = UsageStatsManager.INTERVAL_MONTHLY; break;
-                case "yearly": interval = UsageStatsManager.INTERVAL_YEARLY; break;
-                case "best": interval = UsageStatsManager.INTERVAL_BEST; break;
-            }
+            UsageEvents events =
+                    usm.queryEvents((long) startMillis, (long) endMillis);
 
-            List<UsageStats> stats =
-                    usm.queryUsageStats(interval, (long)startMillis, (long)endMillis);
+            UsageEvents.Event event = new UsageEvents.Event();
 
-            if (stats == null || stats.isEmpty()) {
-                promise.reject("NO_PERMISSION", "Usage access not granted");
-                return;
-            }
+            Map<String, Long> foregroundMap = new HashMap<>();
+            WritableArray sessions = Arguments.createArray();
 
-            WritableArray apps = Arguments.createArray();
-            double totalScreenTime = 0;
+            while (events.hasNextEvent()) {
+                events.getNextEvent(event);
 
-            for (UsageStats usage : stats) {
-                long time = usage.getTotalTimeInForeground();
-                if (time > 0) {
-                    totalScreenTime += time;
+                String packageName = event.getPackageName();
+                if (packageName == null) continue;
 
-                    WritableMap map = Arguments.createMap();
-                    map.putString("packageName", usage.getPackageName());
-                    map.putDouble("timeSeconds", time / 1000.0);
-                    apps.pushMap(map);
+                switch (event.getEventType()) {
+
+                    case UsageEvents.Event.MOVE_TO_FOREGROUND:
+                        foregroundMap.put(packageName, event.getTimeStamp());
+                        break;
+
+                    case UsageEvents.Event.MOVE_TO_BACKGROUND:
+                        if (foregroundMap.containsKey(packageName)) {
+
+                            long startTime = foregroundMap.get(packageName);
+                            long endTime = event.getTimeStamp();
+                            foregroundMap.remove(packageName);
+
+                            WritableMap map = Arguments.createMap();
+                            map.putString("packageName", packageName);
+                            map.putString("appName", getAppName(context, packageName));
+                            map.putDouble("startTimestamp", startTime);
+                            map.putDouble("endTimestamp", endTime);
+
+                            sessions.pushMap(map);
+                        }
+                        break;
                 }
             }
 
-            WritableMap result = Arguments.createMap();
-            result.putDouble("totalSeconds", totalScreenTime / 1000.0);
-            result.putArray("apps", apps);
-
-            promise.resolve(result);
+            promise.resolve(sessions);
 
         } catch (Exception e) {
             promise.reject("ERROR", e);
+        }
+    }
+
+    private String getAppName(Context context, String packageName) {
+        try {
+            return context.getPackageManager()
+                    .getApplicationLabel(
+                            context.getPackageManager()
+                                    .getApplicationInfo(packageName, 0)
+                    ).toString();
+        } catch (Exception e) {
+            return packageName;
         }
     }
 }
