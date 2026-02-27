@@ -10,6 +10,7 @@ import {
   NativeModules,
 } from 'react-native';
 import { useScreenTime } from '../hooks/useUsageStats';
+import { API_BASE_URL } from '../config';
 
 const { UsageStatsModule } = NativeModules;
 
@@ -25,7 +26,7 @@ const DashboardScreen = ({ navigation }) => {
 useEffect(() => {
   const getTodayStats = async () => {
     try {
-      const response = await fetch('http://192.168.32.111:8080/session/today-aggregation?userId=5');
+      const response = await fetch('${API_BASE_URL}/session/today-aggregation?userId=5');
       const data = await response.json();
     } catch (error) {
       console.error("Error with dashboard", error);
