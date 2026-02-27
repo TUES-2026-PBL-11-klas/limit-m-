@@ -4,6 +4,7 @@ COPY .mvn .mvn
 COPY mvnw pom.xml ./
 COPY src src
 RUN ./mvnw -q -DskipTests package
+RUN ./mvnw clean install -U
 
 FROM eclipse-temurin:25-jre
 WORKDIR /app
