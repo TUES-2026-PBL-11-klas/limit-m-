@@ -10,10 +10,18 @@ import DailyDetailsScreen from './screens/DailyDetailsScreen';
 import PermissionScreen from './screens/PermissionScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import HistoryScreen from './screens/HistoryScreen';
+import { useEffect } from 'react';
+
+import { initBackgroundSync } from './services/backgroundSync';
+
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+useEffect(() => {
+  initBackgroundSync();
+}, []);
+
   return (
     <NavigationContainer>
       <StatusBar style="light" />

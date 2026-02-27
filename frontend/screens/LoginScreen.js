@@ -10,6 +10,8 @@ import {
   Platform,
 } from 'react-native';
 
+import { API_BASE_URL } from '../config';
+
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
 
   try {
-    const API_URL = 'http://192.168.32.111:8080/api/login'; 
+    const API_URL = `${API_BASE_URL}/api/login`;
 
     const response = await fetch(API_URL, {
       method: 'POST',

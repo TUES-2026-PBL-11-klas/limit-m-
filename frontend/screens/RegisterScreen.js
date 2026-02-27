@@ -10,6 +10,8 @@ import {
   Platform,
 } from 'react-native';
 
+import { API_BASE_URL } from '../config';
+
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +20,7 @@ const RegisterScreen = ({ navigation }) => {
   const handleRegister = async () => {
 
   try {
-    const API_URL = 'http://192.168.32.111:8080/api/register'; 
+    const API_URL = `${API_BASE_URL}/api/login`;
 
     const response = await fetch(API_URL, {
       method: 'POST',
