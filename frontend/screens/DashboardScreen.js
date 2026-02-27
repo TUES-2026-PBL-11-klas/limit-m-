@@ -24,6 +24,20 @@ const DashboardScreen = ({ navigation }) => {
   const progress = Math.min((dailyUsage / dailyLimit) * 100, 100);
 
 useEffect(() => {
+    const checkPermission = async () => {
+      if (hasCheckedPermission.current) return;
+      hasCheckedPermission.current = true;
+
+      const granted = await UsageStatsModule.hasUsagePermission();
+      if (!granted) {
+        navigation.navigate('Permission');
+      }
+    };
+
+
+    const unsubscribe = navigation.addListener('focus', checkPermission);
+    return unsubscribe;
+
   const getTodayStats = async () => {
     try {
       const response = await fetch('${API_BASE_URL}/session/today-aggregation?userId=5');
