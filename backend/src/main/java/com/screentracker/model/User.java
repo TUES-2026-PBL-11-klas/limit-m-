@@ -21,7 +21,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // One-to-many relationship with TrackingSession entity
+    // One-to-many relationship with Session entity
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Session> sessions = new ArrayList<>();
 
