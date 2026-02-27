@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Something went wrong",
+                "Something went wrong", // ex.getMessage(), //  for debugging
                 LocalDateTime.now()
         );
 
