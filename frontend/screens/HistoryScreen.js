@@ -20,11 +20,12 @@ const HistoryScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.content}>
         
         <TouchableOpacity 
-          style={styles.backButton} 
+          style={styles.backButton}
           onPress={() => navigation.navigate('Dashboard')}
         >
           <Text style={styles.backText}>{'< Dashboard'}</Text>
         </TouchableOpacity>
+
 
         <View style={styles.card}>
           <Text style={styles.cardHeader}>Weekly Usage:</Text>

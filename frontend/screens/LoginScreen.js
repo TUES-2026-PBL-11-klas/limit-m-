@@ -14,10 +14,26 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Login:', { email, password });//connect backend api 
-    navigation.navigate('Dashboard');
-  };
+  const handleLogin = async () => {
+
+  try {
+    const API_URL = 'http://192.168.32.111:8080/api/login'; 
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+
+    const data = await response.json();
+  }catch (error) {
+    console.error('Login error:', error);}
+};
 
   return (
     <SafeAreaView style={styles.container}>

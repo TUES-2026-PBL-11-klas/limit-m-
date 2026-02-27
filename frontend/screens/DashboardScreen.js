@@ -22,20 +22,17 @@ const DashboardScreen = ({ navigation }) => {
   const dailyUsage = totalMinutes ?? 0;
   const progress = Math.min((dailyUsage / dailyLimit) * 100, 100);
 
-  useEffect(() => {
-    const checkPermission = async () => {
-      if (hasCheckedPermission.current) return;
-      hasCheckedPermission.current = true;
-
-      const granted = await UsageStatsModule.hasUsagePermission();
-      if (!granted) {
-        navigation.navigate('Permission');
-      }
-    };
-
-    const unsubscribe = navigation.addListener('focus', checkPermission);
-    return unsubscribe;
-  }, [navigation]);
+useEffect(() => {
+  const getTodayStats = async () => {
+    try {
+      const response = await fetch('http://192.168.32.111:8080/session/today-aggregation?userId=5');
+      const data = await response.json();
+    } catch (error) {
+      console.error("Error with dashboard", error);
+    }
+  };
+  getTodayStats();
+}, []);
 
   return (
     <SafeAreaView style={styles.container}>
