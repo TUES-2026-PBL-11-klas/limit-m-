@@ -4,7 +4,9 @@ import com.screentracker.dto.SessionRequest;
 import com.screentracker.dto.TodayAggregateResponse;
 import com.screentracker.model.Session;
 import com.screentracker.model.TodayAggregate;
+import com.screentracker.model.User;
 import com.screentracker.repository.SessionRepository;
+import com.screentracker.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,11 @@ import java.util.stream.Collectors;
 @Service
 public class SessionService {
     private final SessionRepository sessionRepository;
+    private final UserRepository userRepository;
 
-    public SessionService(SessionRepository sessionRepository) {
+    public SessionService(SessionRepository sessionRepository, UserRepository userRepository) {
         this.sessionRepository = sessionRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -34,10 +38,14 @@ public class SessionService {
         LocalDate startDate = start.toLocalDate();
         LocalDate endDate = end.toLocalDate();
 
+        User user = userRepository.findById(request.getUser_id())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         //Same day - save entry
         if(startDate.equals(endDate)) {
             Session session = new Session();
-            session.setUser_id(request.getUser_id());
+
+            session.setUser(user);
             session.setApp(request.getApp());
             session.setStart_time(request.getStart_time());
             session.setEnd_time(request.getEnd_time());
@@ -49,8 +57,7 @@ public class SessionService {
         LocalDate currentDate = startDate;
 
         while (!currentDate.isAfter(endDate)) { // mimics currentDate <= endDate
-
-            Session part = new Session(request.getStart_time(), request.getEnd_time(), request.getApp(), request.getUser_id());
+            Session part = new Session(request.getStart_time(), request.getEnd_time(), request.getApp(), user);
 
             if (currentDate.equals(startDate)) {
                 // First day
@@ -78,9 +85,11 @@ public class SessionService {
     public List<TodayAggregate> aggregateResponses(Long user_id) {
         //Now
         LocalDateTime start_of_today = LocalDate.now().atStartOfDay();
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         //Filter all Session Entries by user_id and time after
         List<Session> filtered_sessions =
-                sessionRepository.findByUser_idAndStart_timeAfter(user_id, start_of_today);
+                sessionRepository.findByUserAndStart_timeAfter(user, start_of_today);
 
         //Maps every app as key and a List of Session entries
         Map<String, List<Session>> sessions_by_app = filtered_sessions.stream().collect(Collectors.groupingBy(Session::getApp));
@@ -103,7 +112,7 @@ public class SessionService {
             }
 
             TodayAggregate aggregate =
-                    new TodayAggregate(user_id, app, totalDuration);
+                    new TodayAggregate(user, app, totalDuration);
 
             result.add(aggregate);
         }

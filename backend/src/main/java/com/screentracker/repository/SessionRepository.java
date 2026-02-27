@@ -13,9 +13,6 @@ import java.util.Optional;
 public interface SessionRepository extends JpaRepository<Session, Long> {
     Optional<Session> findByUser_id(Long user_id);
     Optional<Session> findByApp(String app);
-    List<Session> findByUser_idAndStart_timeAfter(
-            Long user_id,
-            LocalDateTime start_time
-    );
+    List<Session> findByUserAndStart_timeAfter(User user, LocalDateTime start);
 
 }

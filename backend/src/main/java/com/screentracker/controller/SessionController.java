@@ -39,7 +39,7 @@ public class SessionController {
 
             TodayAggregateResponse response =
                     new TodayAggregateResponse(
-                            aggregate.getUser_id(),
+                            aggregate.getUser().getId(),
                             aggregate.getApp(),
                             aggregate.getTime_spent()
                     );
@@ -49,3 +49,4 @@ public class SessionController {
 
         return ResponseEntity.ok(responses);
     }
+}
