@@ -14,10 +14,10 @@ public class Session {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime start_time;
+    private LocalDateTime startTime;
 
     @Column(nullable = false)
-    private LocalDateTime end_time;
+    private LocalDateTime endTime;
 
     @Column(nullable = false)
     private String app;
@@ -30,22 +30,22 @@ public class Session {
     //Constructors
     public Session() {}
 
-    public Session(LocalDateTime start_time, LocalDateTime end_time, String app, User user) {
-        this.start_time = start_time;
-        this.end_time = end_time;
+    public Session(LocalDateTime startTime, LocalDateTime endTime, String app, User user) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.app = app;
         this.user = user;
     }
 
     //Getters & Setters
     public Long getId() { return id; }
-    public LocalDateTime getStart_time() { return start_time; }
-    public LocalDateTime getEnd_time() { return end_time; }
+    public LocalDateTime getStart_time() { return startTime; }
+    public LocalDateTime getEnd_time() { return endTime; }
     public String getApp() { return app; }
     public User getUser() { return user; }
 
-    public void setStart_time(LocalDateTime start_time) { this.start_time = start_time; }
-    public void setEnd_time(LocalDateTime end_time) { this.end_time = end_time; }
+    public void setStart_time(LocalDateTime startTime) { this.startTime = startTime; }
+    public void setEnd_time(LocalDateTime endTime) { this.endTime = endTime; }
     public void setApp(String app) { this.app = app; }
     public void setUser(User user) { this.user = user; }
     

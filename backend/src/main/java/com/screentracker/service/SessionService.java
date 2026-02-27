@@ -89,7 +89,7 @@ public class SessionService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         //Filter all Session Entries by user_id and time after
         List<Session> filtered_sessions =
-                sessionRepository.findByUserAndStart_timeAfter(user, start_of_today);
+                sessionRepository.findByUserAndStartTimeAfter(user, start_of_today);
 
         //Maps every app as key and a List of Session entries
         Map<String, List<Session>> sessions_by_app = filtered_sessions.stream().collect(Collectors.groupingBy(Session::getApp));
