@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 30,
     alignItems: 'center',
+    top: -60,
   },
   backbutton: {
     backgroundColor: 'transparent',

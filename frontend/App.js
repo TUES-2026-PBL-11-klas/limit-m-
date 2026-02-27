@@ -31,7 +31,7 @@ export default function App() {
         <Stack.Screen name="DailyDetails" component={DailyDetailsScreen} />
         <Stack.Screen name="Permission" component={PermissionScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} />
       </Stack.Navigator> 
     </NavigationContainer>
   );
