@@ -19,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
 
   try {
-    const API_URL = `${API_BASE_URL}/api/login`;
+    const API_URL = `${API_BASE_URL}/user/login`;
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -33,6 +33,7 @@ const LoginScreen = ({ navigation }) => {
     });
 
     const data = await response.json();
+    console.log(data);
   }catch (error) {
     console.error('Login error:', error);}
 

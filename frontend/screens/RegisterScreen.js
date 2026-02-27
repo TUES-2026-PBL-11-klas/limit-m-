@@ -20,7 +20,7 @@ const RegisterScreen = ({ navigation }) => {
   const handleRegister = async () => {
 
   try {
-    const API_URL = `${API_BASE_URL}/api/login`;
+    const API_URL = `${API_BASE_URL}/user/register`;
 
     const response = await fetch(API_URL, {
       method: 'POST',
