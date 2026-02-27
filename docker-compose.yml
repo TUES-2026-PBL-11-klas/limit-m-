@@ -1,26 +1,13 @@
 version: "3.9"
 
 services:
-  # db:
-  #   image: postgres:17
-  #   container_name: screentracker-postgres
-  #   restart: unless-stopped
-  #   environment:
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-  #   networks:
-  #     - screentracker-net
-
   backend:
     build:
       context: ./backend
     container_name: screentracker-backend
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
@@ -34,7 +21,3 @@ services:
 networks:
   screentracker-net:
     driver: bridge
-
-volumes:
-  db-data:
-
