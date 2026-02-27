@@ -1,7 +1,7 @@
 import BackgroundFetch from 'react-native-background-fetch';
 import { NativeModules } from 'react-native';
 import { getTodayRange } from '../hooks/useUsageStats.js';
-
+import { API_BASE_URL } from '../config';
 const { UsageStatsModule } = NativeModules;
 
 async function snapshotAndSend() {
@@ -15,9 +15,8 @@ async function snapshotAndSend() {
     for (const session of sessions) {
       const startTime = new Date(session.startTimestamp).toISOString();
       const endTime = new Date(session.endTimestamp).toISOString();
-
       try {
-        await fetch('http://192.168.56.1:8080/session/post-session', {
+        await fetch(`${API_BASE_URL}/session/post-session`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
