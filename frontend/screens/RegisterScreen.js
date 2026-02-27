@@ -15,9 +15,29 @@ const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    console.log('Register:', { name, email, password });//backend api connect
-  };
+  const handleRegister = async () => {
+
+  try {
+    const API_URL = 'http://192.168.32.111:8080/api/register'; 
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
+    });
+
+    const data = await response.json();
+
+  } catch (error) {
+    console.error('Registration error:', error);
+  }
+};
 
   return (
     <SafeAreaView style={styles.container}>
