@@ -15,7 +15,7 @@ public class LoginRequest {
     private String password;
 
     //Constructor
-    LoginRequest() {}
+    public LoginRequest() {}
 
     //Getters & Setters
     public String getEmail() { return email; }
